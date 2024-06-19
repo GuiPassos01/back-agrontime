@@ -9,24 +9,26 @@ datasource db {
 
 model Usuarios {
   idUsuario      Int        @id @default(autoincrement()) @map("id_usuario")
-  nomeCompleto    String    @db.VarChar(100)
+  nomeCompleto    String    @db.VarChar(100) @map("nome_completo")
   documentoFiscal String    @map("documento_fiscal") @db.VarChar(100)
   email           String    @unique @db.VarChar(100)
   tipo            String    @db.VarChar(100)
   status          Boolean   @default(true)
   celular         String    @db.VarChar(100)
   genero          String    @db.VarChar(100)
-  dataNascimento  DateTime  @map("data_nascimento")
+  dataNascimento  String    @map("data_nascimento")
   senha           String    @db.VarChar(100)
-  createdAt       DateTime  @default(now()) @map("criado_em")
+  criadoEm        DateTime   @default(now()) @map("criado_em")
 
-  EnderecoUsuario EnderecoUsuario?
-  Fazendas        Fazenda[]
+  enderecoUsuario EnderecoUsuario?
+  fazendas        Fazenda[]
+  
+  @@map("usuarios")
 }
 
 model EnderecoUsuario {
   idEndereco  Int      @id @default(autoincrement()) @map("id_endereco")
-  idUsuario   Int      @unique
+  idUsuario   Int      @unique @map("id_usuario")
   cep         String   @db.VarChar(20)
   rua         String   @db.VarChar(100)
   numero      String   @db.VarChar(20)
@@ -34,23 +36,26 @@ model EnderecoUsuario {
   bairro      String   @db.VarChar(100)
   cidade      String   @db.VarChar(100)
   estado      String   @db.VarChar(100)
-  Usuario     Usuarios @relation(fields: [idUsuario], references: [idUsuario])
+  usuario     Usuarios @relation(fields: [idUsuario], references: [idUsuario])
+  @@map("endereco_usuario")
 }
 
 model Fazenda {
   idFazenda        Int             @id @default(autoincrement()) @map("id_fazenda")
-  idUsuario        Int
+  idUsuario        Int             @map("id_usuario")
   nome             String          @db.VarChar(100)
   nirf             String          @db.VarChar(100)
   areaPropriedade  Float           @map("area_propriedade")
   qtdFuncionarios  Int             @map("qtd_funcionarios")
   EnderecoFazenda  EnderecoFazenda?
-  Usuario          Usuarios        @relation(fields: [idUsuario], references: [idUsuario])
+  usuario          Usuarios        @relation(fields: [idUsuario], references: [idUsuario])
+
+  @@map("fazenda")
 }
 
 model EnderecoFazenda {
   idEndereco  Int      @id @default(autoincrement()) @map("id_endereco")
-  idFazenda   Int      @unique
+  idFazenda   Int      @unique @map("id_fazenda")
   cep         String   @db.VarChar(20)
   rua         String   @db.VarChar(100)
   numero      String   @db.VarChar(20)
@@ -58,5 +63,7 @@ model EnderecoFazenda {
   bairro      String   @db.VarChar(100)
   cidade      String   @db.VarChar(100)
   estado      String   @db.VarChar(100)
-  Fazenda     Fazenda  @relation(fields: [idFazenda], references: [idFazenda])
+  fazenda     Fazenda  @relation(fields: [idFazenda], references: [idFazenda])
+
+  @@map("endereco_fazenda")
 }
