@@ -24,24 +24,13 @@ export class AuthController {
       return { access_token };
     }
 
-    @HttpCode(200)
-    @Post('reset-password')
-    @ApiOperation({
-      summary: 'Rota para atualizar senha do usuário',
-    })
-    async resetPassword(@Body() changePasswordDto: ChangePasswordDto): Promise<{ message: string }> {
-      await this.authService.resetPassword(changePasswordDto.token, changePasswordDto.senha);
-      return { message: 'Sua senha foi redefinida com sucesso.' };
-    }
-
-    @HttpCode(200)
-    @Post('request-password-reset')
-    @ApiOperation({
-      summary: 'Rota para solicitar redefinição de senha do usuário',
-    })
-    async requestPasswordReset(@Body() resetPasswordRequestDto: ResetPasswordRequestDto): Promise<{ message: string }> {
-      await this.authService.sendPasswordResetEmail(resetPasswordRequestDto.email);
-      return { message: 'Se um usuário com esse e-mail for encontrado, um e-mail de redefinição de senha será enviado.' };
-    }
-
+    // @HttpCode(200)
+    // @Post('reset-password')
+    // @ApiOperation({
+    //   summary: 'Rota para atualizar senha do usuário',
+    // })
+    // async resetPassword(@Body() changePasswordDto: ChangePasswordDto): Promise<{ message: string }> {
+    //   await this.authService.resetPassword(changePasswordDto.token, changePasswordDto.senha);
+    //   return { message: 'Sua senha foi redefinida com sucesso.' };
+    // }
 }

@@ -74,6 +74,7 @@ export class UsuariosService {
         genero: atualizarUsuarioDto.genero,
         dataNascimento: atualizarUsuarioDto.dataNascimento,
         celular: atualizarUsuarioDto.celular,
+        senha: atualizarUsuarioDto.senha
       }
     });
   
