@@ -4,8 +4,9 @@ import { LoginDto } from './dto/login.dto';
 import { Response } from 'express';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { ResetPasswordRequestDto } from './dto/reset-password.dto';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Autenticação')
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService){}
