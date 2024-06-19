@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { FazendasService } from './fazendas.service';
 import { CreateFazendaDto } from './dto/create-fazenda.dto';
 import { UpdateFazendaDto } from './dto/update-fazenda.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiProduces, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('Fazendas')
@@ -22,6 +22,7 @@ export class FazendasController {
     return this.fazendasService.findOne(+id);
   }
 
+  @ApiOperation({summary: 'Rota para retornar todas as fazendas'})
   @Get('/')
   async findFazendas() {
     return await this.fazendasService.todasFazendas();
