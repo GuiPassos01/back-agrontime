@@ -15,16 +15,13 @@ export class AuthController {
     @ApiOperation({
       summary: 'Rota para realizar login do usuário'
     })
-    async login(@Body() loginDto: LoginDto, @Res({passthrough: true}) res: Response): 
-    Promise<{ success: string }>
-    {
+      async login(@Body() loginDto: LoginDto, @Res({ passthrough: true }) res: Response):
+      Promise<{ access_token: string }> {
       const { access_token } = await this.authService.login(loginDto);
-      
-      res.cookie('jwt', access_token, 
-        {httpOnly: true, secure: true, sameSite: 'none',}
-        );
 
-      return null;
+      res.cookie('jwt', access_token, { httpOnly: true, secure: true, sameSite: 'none' });
+
+      return { access_token };
     }
 
     @HttpCode(200)
