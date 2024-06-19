@@ -17,9 +17,14 @@ export class FazendasController {
   }
 
   @ApiOperation({summary: 'Rota para achar uma fazenda'})
-  @Get(':id')
+  @Post(':id')
   async findOne(@Param('id') id: number) {
     return this.fazendasService.findOne(+id);
+  }
+
+  @Get('/')
+  async findFazendas() {
+    return await this.fazendasService.todasFazendas();
   }
 
   @ApiOperation({summary: 'Rota para alterar os dados da fazenda'})
