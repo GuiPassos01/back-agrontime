@@ -6,7 +6,6 @@ import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service';
 import { FindByEmailDto } from '../usuarios/dto/find-by-email.dto';
 import { LoginDto } from './dto/login.dto';
-import { MailService } from '../mail/mail.service';
 import { ConfigService } from '@nestjs/config';
 import { UsuariosService } from '../usuarios/usuarios.service';
 import { FindByIdDto } from '../usuarios/dto/find-by-id.dto';
@@ -16,7 +15,6 @@ export class AuthService {
     constructor(private readonly usuariosService: UsuariosService, 
                 private readonly jwtService: JwtService,
                 private readonly prismaService: PrismaService,
-                private readonly mailService: MailService,
                 private readonly configService: ConfigService
                 ){}
 
@@ -159,32 +157,4 @@ export class AuthService {
 
     }
 
-    async sendPasswordResetEmail(email: string): Promise<void> {
-      try{
-        const usuario = await this.usuariosService.findUser({ email });
-  
-        if (!usuario) {
-          throw new NotFoundException('Usuário não encontrado!');
-        }
-      
-        const payload = {
-          sub: usuario.id_usuario,
-          email: usuario.email,
-          reset: true,
-        };
-      
-        const resetToken = this.jwtService.sign(payload, {
-          expiresIn: '15m',
-          secret: this.configService.get('JWT_RESET_SECRET'),
-        });
-      
-        const resetUrl = `${this.configService.get('DEV_FRONTEND_URL')}/redefinir-senha?token=${resetToken}`;
-      
-        await this.mailService.sendPasswordResetEmail(email, resetUrl);
-      } catch(err){
-        console.error(err)
-        throw err;
-      }
-      
-    }
   }

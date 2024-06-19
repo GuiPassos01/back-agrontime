@@ -32,6 +32,15 @@ export class AtualizarUsuarioDto {
     @IsString()
     @IsNotEmpty()
     genero: string;
+
+    @ApiProperty({example: 'Teste123!'})
+    @IsString()
+    @MinLength(8)
+    @MaxLength(20)
+    @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[a-z]).*$/, {
+        message: 'Senha fraca',
+    })
+    readonly senha: string;
   
     @ApiProperty({ example: '02-04-2003' })
     @IsString()

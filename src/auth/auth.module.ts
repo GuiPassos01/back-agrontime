@@ -6,11 +6,9 @@ import { UsuariosModule } from '../usuarios/usuarios.module';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { PrismaModule } from '../prisma/prisma.module';
-import { MailModule } from '../mail/mail.module';
-import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [UsuariosModule, PrismaModule, MailModule, ConfigModule, JwtModule.register({
+  imports: [UsuariosModule, PrismaModule, JwtModule.register({
     secret: process.env.JWT_SECRET,
     signOptions: {expiresIn: '1d'}
   })],
