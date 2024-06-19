@@ -6,8 +6,9 @@ import { FindByIdDto } from './dto/find-by-id.dto';
 import { FindByEmailDto } from './dto/find-by-email.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UserIdInterceptor } from '../utils/user-id.interceptor';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Usuário')
 @Controller('usuarios')
 export class UsuariosController {
   constructor(private readonly userService: UsuariosService) { }

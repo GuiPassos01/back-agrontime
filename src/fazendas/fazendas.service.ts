@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateFazendaDto } from './dto/create-fazenda.dto';
 import { UpdateFazendaDto } from './dto/update-fazenda.dto';
 import { PrismaService } from '../prisma/prisma.service';
@@ -23,14 +23,6 @@ export class FazendasService {
     });
 
     return fazenda;
-  }
-
-  async findAll() {
-    return this.prisma.fazenda.findMany({
-      include: {
-        EnderecoFazenda: true,
-      },
-    });
   }
 
   async findOne(id: number) {
@@ -71,9 +63,9 @@ export class FazendasService {
     try {
       const fazenda = await this.findOne(id);
       await this.prisma.fazenda.delete({ where: { idFazenda: id } });
-      return fazenda;
+      return {message: 'Fazenda excluida com sucesso.'};
     } catch (error) {
-      console.log(error)
+      throw new BadRequestException('Fazenda não encontrada')
     }
   }
 }
