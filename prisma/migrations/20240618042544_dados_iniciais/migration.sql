@@ -1,7 +1,7 @@
 -- CreateTable
-CREATE TABLE "Usuarios" (
+CREATE TABLE "usuarios" (
     "id_usuario" SERIAL NOT NULL,
-    "nomeCompleto" VARCHAR(100) NOT NULL,
+    "nome_completo" VARCHAR(100) NOT NULL,
     "documento_fiscal" VARCHAR(100) NOT NULL,
     "email" VARCHAR(100) NOT NULL,
     "tipo" VARCHAR(100) NOT NULL,
@@ -12,13 +12,13 @@ CREATE TABLE "Usuarios" (
     "senha" VARCHAR(100) NOT NULL,
     "criado_em" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "Usuarios_pkey" PRIMARY KEY ("id_usuario")
+    CONSTRAINT "usuarios_pkey" PRIMARY KEY ("id_usuario")
 );
 
 -- CreateTable
-CREATE TABLE "EnderecoUsuario" (
+CREATE TABLE "endereco_usuario" (
     "id_endereco" SERIAL NOT NULL,
-    "idUsuario" INTEGER NOT NULL,
+    "id_usuario" INTEGER NOT NULL,
     "cep" VARCHAR(20) NOT NULL,
     "rua" VARCHAR(100) NOT NULL,
     "numero" VARCHAR(20) NOT NULL,
@@ -27,25 +27,25 @@ CREATE TABLE "EnderecoUsuario" (
     "cidade" VARCHAR(100) NOT NULL,
     "estado" VARCHAR(100) NOT NULL,
 
-    CONSTRAINT "EnderecoUsuario_pkey" PRIMARY KEY ("id_endereco")
+    CONSTRAINT "endereco_usuario_pkey" PRIMARY KEY ("id_endereco")
 );
 
 -- CreateTable
-CREATE TABLE "Fazenda" (
+CREATE TABLE "fazenda" (
     "id_fazenda" SERIAL NOT NULL,
-    "idUsuario" INTEGER NOT NULL,
+    "id_usuario" INTEGER NOT NULL,
     "nome" VARCHAR(100) NOT NULL,
     "nirf" VARCHAR(100) NOT NULL,
     "area_propriedade" DOUBLE PRECISION NOT NULL,
     "qtd_funcionarios" INTEGER NOT NULL,
 
-    CONSTRAINT "Fazenda_pkey" PRIMARY KEY ("id_fazenda")
+    CONSTRAINT "fazenda_pkey" PRIMARY KEY ("id_fazenda")
 );
 
 -- CreateTable
-CREATE TABLE "EnderecoFazenda" (
+CREATE TABLE "endereco_fazenda" (
     "id_endereco" SERIAL NOT NULL,
-    "idFazenda" INTEGER NOT NULL,
+    "id_fazenda" INTEGER NOT NULL,
     "cep" VARCHAR(20) NOT NULL,
     "rua" VARCHAR(100) NOT NULL,
     "numero" VARCHAR(20) NOT NULL,
@@ -54,23 +54,23 @@ CREATE TABLE "EnderecoFazenda" (
     "cidade" VARCHAR(100) NOT NULL,
     "estado" VARCHAR(100) NOT NULL,
 
-    CONSTRAINT "EnderecoFazenda_pkey" PRIMARY KEY ("id_endereco")
+    CONSTRAINT "endereco_fazenda_pkey" PRIMARY KEY ("id_endereco")
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Usuarios_email_key" ON "Usuarios"("email");
+CREATE UNIQUE INDEX "usuarios_email_key" ON "usuarios"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "EnderecoUsuario_idUsuario_key" ON "EnderecoUsuario"("idUsuario");
+CREATE UNIQUE INDEX "endereco_usuario_id_usuario_key" ON "endereco_usuario"("id_usuario");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "EnderecoFazenda_idFazenda_key" ON "EnderecoFazenda"("idFazenda");
+CREATE UNIQUE INDEX "endereco_fazenda_id_fazenda_key" ON "endereco_fazenda"("id_fazenda");
 
 -- AddForeignKey
-ALTER TABLE "EnderecoUsuario" ADD CONSTRAINT "EnderecoUsuario_idUsuario_fkey" FOREIGN KEY ("idUsuario") REFERENCES "Usuarios"("id_usuario") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "endereco_usuario" ADD CONSTRAINT "endereco_usuario_id_usuario_fkey" FOREIGN KEY ("id_usuario") REFERENCES "usuarios"("id_usuario") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Fazenda" ADD CONSTRAINT "Fazenda_idUsuario_fkey" FOREIGN KEY ("idUsuario") REFERENCES "Usuarios"("id_usuario") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "fazenda" ADD CONSTRAINT "fazenda_id_usuario_fkey" FOREIGN KEY ("id_usuario") REFERENCES "usuarios"("id_usuario") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "EnderecoFazenda" ADD CONSTRAINT "EnderecoFazenda_idFazenda_fkey" FOREIGN KEY ("idFazenda") REFERENCES "Fazenda"("id_fazenda") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "endereco_fazenda" ADD CONSTRAINT "endereco_fazenda_id_fazenda_fkey" FOREIGN KEY ("id_fazenda") REFERENCES "fazenda"("id_fazenda") ON DELETE RESTRICT ON UPDATE CASCADE;
