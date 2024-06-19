@@ -27,21 +27,21 @@ export class UsuariosController {
 
   }
 
-  @UseGuards(JwtAuthGuard)
-  @ApiOperation({
-    summary: 'Rota para obter todos os usuários',
-    description: 'Necessário cookie de autenticação'
-  })
-  @Get('getAll')
-  async findAll() {
-    const usuarios = await this.userService.findAll();
+  // @UseGuards(JwtAuthGuard)
+  // @ApiOperation({
+  //   summary: 'Rota para obter todos os usuários',
+  //   description: 'Necessário cookie de autenticação'
+  // })
+  // @Get('getAll')
+  // async findAll() {
+  //   const usuarios = await this.userService.findAll();
 
-    if (usuarios.length === 0) {
-      throw new NotFoundException("Nenhum usuário encontrado");
-    }
+  //   if (usuarios.length === 0) {
+  //     throw new NotFoundException("Nenhum usuário encontrado");
+  //   }
 
-    return usuarios
-  }
+  //   return usuarios
+  // }
 
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(UserIdInterceptor)
@@ -49,12 +49,12 @@ export class UsuariosController {
     summary: 'Rota para buscar usuário pelo email',
     description: 'Necessário cookie de autenticação'
   })
-  @Post('findByEmail')
+  @Get('findByEmail')
   async findUser(@Body() findUserDto: FindByEmailDto) {
     const user = await this.userService.findUser(findUserDto);
 
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException('Usuario não encontrado');
     }
 
     return user;
@@ -85,9 +85,7 @@ export class UsuariosController {
   })
   @Patch('update')
   async update(@Body() atualizarUsuarioDto: AtualizarUsuarioDto) {
-
     const updatedUser = await this.userService.atualizarUsuario(atualizarUsuarioDto);
-
     return updatedUser;
   }
 

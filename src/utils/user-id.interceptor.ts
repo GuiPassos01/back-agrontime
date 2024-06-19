@@ -5,12 +5,11 @@ import { Observable } from 'rxjs';
 export class UserIdInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const request = context.switchToHttp().getRequest();
-
     const user = request.user;
 
     if (request.method === 'GET') {
       if (user && user.id) {
-        request.query.id_usuario = user.id;
+        request.query.idUsuario = user.id;
       }
 
       if (request.query.id_imovel) {
@@ -18,7 +17,7 @@ export class UserIdInterceptor implements NestInterceptor {
       }
 
     } else if (user && user.id) {
-      request.body.id_usuario = user.id;
+      request.body.idUsuario = user.id;
     }
 
     return next.handle();

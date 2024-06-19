@@ -62,18 +62,25 @@ export class UsuariosService {
   }
   
   async atualizarUsuario(atualizarUsuarioDto: AtualizarUsuarioDto) {
-    const data = {
-      ...atualizarUsuarioDto,
-    }
-
-    const usuario = await this.prismaService.updateEntity({
-      id_entidade: atualizarUsuarioDto.id_usuario,
-      data,
-      entidadeTipo: "usuarios"
-    })
-
-    return usuario;
+    const usuario = await this.prismaService.usuarios.update({
+      where: {
+        idUsuario: atualizarUsuarioDto.idUsuario
+      },
+      data: {
+        nomeCompleto: atualizarUsuarioDto.nomeCompleto,
+        documentoFiscal: atualizarUsuarioDto.documentoFiscal,
+        email: atualizarUsuarioDto.email,
+        tipo: atualizarUsuarioDto.tipo,
+        genero: atualizarUsuarioDto.genero,
+        dataNascimento: atualizarUsuarioDto.dataNascimento,
+        celular: atualizarUsuarioDto.celular,
+      }
+    });
+  
+    const { senha, ...usuarioSemSenha } = usuario;
+    return usuarioSemSenha;
   }
+  
 
   async atualizarSenha(atualizarSenhaDto: AtualizarSenhaDto){
     const {id_usuario, senha} = atualizarSenhaDto;
