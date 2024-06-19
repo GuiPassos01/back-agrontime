@@ -64,7 +64,7 @@ export class AuthService {
 
         if (entity) {
           return {
-            id: payload.sub,
+            id: payload.id_usuario ,
             email: payload.email,
             nome: payload.nomeCompleto,
 
