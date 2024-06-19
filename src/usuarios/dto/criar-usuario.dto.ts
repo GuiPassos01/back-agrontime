@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
     IsDate,
     IsEmail,
@@ -9,18 +10,22 @@ import {
 } from 'class-validator';
 
 export class CriarUsuarioDto {
+    @ApiProperty({example: 'Deilton Pedro'})
     @IsNotEmpty()
     @IsString()
     readonly nomeCompleto: string;
 
+    @ApiProperty({example: '000000000'})
     @IsString()
     @IsNotEmpty()
     documentoFiscal: string;
 
+    @ApiProperty({example: 'teste@gmail.com'})
     @IsNotEmpty()
     @IsEmail({}, { message: 'Informe um email válido' })
     readonly email: string;
 
+    @ApiProperty({example: 'Teste123!'})
     @IsString()
     @MinLength(8)
     @MaxLength(20)
@@ -29,39 +34,22 @@ export class CriarUsuarioDto {
     })
     readonly senha: string;
 
+    @ApiProperty({example: 'Proprietario'})
     @IsString()
     @IsNotEmpty()
     tipo: string;
     
+    @ApiProperty({example: '00000000000'})
     @IsString()
     @IsNotEmpty()
     celular: string;
 
+    @ApiProperty({example: 'Masculino'})
     @IsString()
     @IsNotEmpty()
     genero: string;
 
+    @ApiProperty({example: '02-04-2003'})
     @IsString()
     dataNascimento: string;
 }
-
-/* 
-model Usuarios {
-  idUsuario      Int        @id @default(autoincrement()) @map("id_usuario")
-  nomeCompleto    String    @db.VarChar(100) @map("nome_completo")
-  documentoFiscal String    @map("documento_fiscal") @db.VarChar(100)
-  email           String    @unique @db.VarChar(100)
-  tipo            String    @db.VarChar(100)
-  status          Boolean   @default(true)
-  celular         String    @db.VarChar(100)
-  genero          String    @db.VarChar(100)
-  dataNascimento  DateTime  @map("data_nascimento")
-  senha           String    @db.VarChar(100)
-  criadoEm        DateTime   @default(now()) @map("criado_em")
-
-  enderecoUsuario EnderecoUsuario?
-  fazendas        Fazenda[]
-  
-  @@map("usuarios")
-}
-*/

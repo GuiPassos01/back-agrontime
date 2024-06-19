@@ -43,7 +43,7 @@ export class UsuariosController {
     return usuarios
   }
 
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(UserIdInterceptor)
   @ApiOperation({
     summary: 'Rota para buscar usuário pelo email',

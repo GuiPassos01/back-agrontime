@@ -41,7 +41,13 @@ export class AuthService {
             const payload: Payload = {
                 sub: usuario.id_usuario,
                 email: usuario.email,
-                nome: usuario.nome
+                nomeCompleto: usuario.nomeCompleto,
+                documentoFiscal: usuario.documentoFiscal,
+                senha: usuario.senha,
+                tipo: usuario.tipo,
+                celular: usuario.celular,
+                genero: usuario.genero,
+                dataNascimento: usuario.dataNascimento
             };
             const expiresIn =  '1d';
 
@@ -63,38 +69,46 @@ export class AuthService {
           return {
             id: payload.sub,
             email: payload.email,
+            nome: payload.nomeCompleto,
+
           };
         }
 
         return null;
     }
 
-    async generatePasswordResetToken(email: string): Promise<string> {
-      const findByEmailDto: FindByEmailDto = {
-        email
-      }
-
-      const usuario = await this.usuariosService.findUser(findByEmailDto);
-    
-      if (!usuario) {
-        throw new NotFoundException('Usuário não encontrado!');
-      }
-    
-      const payload: Payload = {
-        sub: usuario.id_usuario,
-        email: usuario.email,
-        nome: usuario.nome,
-        reset: true 
-      };
-      const expiresIn = '1h';
-    
-      const resetToken = this.jwtService.sign(payload, {
-        expiresIn,
-        secret: process.env.JWT_RESET_SECRET,
-      });
-    
-      return resetToken;
+  async generatePasswordResetToken(email: string): Promise<string> {
+    const findByEmailDto: FindByEmailDto = {
+      email
     }
+
+    const usuario = await this.usuariosService.findUser(findByEmailDto);
+
+    if (!usuario) {
+      throw new NotFoundException('Usuário não encontrado!');
+    }
+
+    const payload: Payload = {
+      sub: usuario.id_usuario,
+      email: usuario.email,
+      nomeCompleto: usuario.nomeCompleto,
+      documentoFiscal: usuario.documentoFiscal,
+      senha: usuario.senha,
+      tipo: usuario.tipo,
+      celular: usuario.celular,
+      genero: usuario.genero,
+      dataNascimento: usuario.dataNascimento,
+      reset: true
+    };
+    const expiresIn = '1h';
+
+    const resetToken = this.jwtService.sign(payload, {
+      expiresIn,
+      secret: process.env.JWT_RESET_SECRET,
+    });
+
+    return resetToken;
+  }
     
     async validateResetToken(token: string): Promise<Usuario> {
       try {

@@ -64,7 +64,6 @@ export class UsuariosService {
   async atualizarUsuario(atualizarUsuarioDto: AtualizarUsuarioDto) {
     const data = {
       ...atualizarUsuarioDto,
-      versao: atualizarUsuarioDto.versao + 1
     }
 
     const usuario = await this.prismaService.updateEntity({
