@@ -40,6 +40,12 @@ export class FazendasService {
     return fazenda;
   }
 
+  async todasFazendas() {
+    const fazendas = await this.prisma.fazenda.findMany()
+
+    return fazendas;
+  }
+
   async update(id: number, updateFazendaDto: UpdateFazendaDto) {
     const { endereco, ...fazendaData } = updateFazendaDto;
 
