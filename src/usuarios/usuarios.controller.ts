@@ -50,7 +50,7 @@ export class UsuariosController {
     summary: 'Rota para buscar usuário pelo email',
     description: 'Necessário cookie de autenticação'
   })
-  @Get('findByEmail')
+  @Post('findByEmail')
   async findUser(@Body() findUserDto: FindByEmailDto) {
     const user = await this.userService.findUser(findUserDto);
 
