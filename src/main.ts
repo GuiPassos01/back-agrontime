@@ -30,7 +30,7 @@ async function bootstrap() {
   app.useGlobalFilters(new PrismaExceptionFilter());
 
   app.enableCors({
-    origin: true, //Definir especificamente quais endpoints podem acessar o backend
+    origin: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type, Accept, Authorization, api-key',
     credentials: true

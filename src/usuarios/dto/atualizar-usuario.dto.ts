@@ -1,22 +1,38 @@
 import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString, Matches, MaxLength, MinLength } from 'class-validator';
 import { Usuario } from '../entities/usuario.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class AtualizarUsuarioDto extends Usuario{
-
+    @ApiProperty({example: 'Deilton Pedro'})
     @IsNotEmpty()
-    @IsNumber()
-    readonly id_usuario: number;
-
-    @IsOptional()
     @IsString()
-    readonly nome: string;
+    readonly nomeCompleto: string;
 
-    @IsOptional()
-    @IsEmail({}, { message: 'Enter correct email' })
+    @ApiProperty({example: '000000000'})
+    @IsString()
+    @IsNotEmpty()
+    documentoFiscal: string;
+
+    @ApiProperty({example: 'teste@gmail.com'})
+    @IsNotEmpty()
+    @IsEmail({}, { message: 'Informe um email válido' })
     readonly email: string;
 
+    @ApiProperty({example: 'Proprietario'})
+    @IsString()
     @IsNotEmpty()
-    @IsNumber()
-    readonly versao: number;
+    tipo: string;
 
+    @ApiProperty({example: 'Masculino'})
+    @IsString()
+    @IsNotEmpty()
+    genero: string;
+
+    @ApiProperty({example: '02-04-2003'})
+    @IsString()
+    dataNascimento: string;
+
+    @ApiProperty({example: '00000000000'})
+    @IsString()
+    celular: string;
 }
