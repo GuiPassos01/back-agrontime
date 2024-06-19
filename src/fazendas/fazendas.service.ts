@@ -8,6 +8,7 @@ export class FazendasService {
   constructor(private readonly prisma: PrismaService) { }
 
   async create(createFazendaDto: CreateFazendaDto) {
+    try{
     const { endereco, ...fazendaData } = createFazendaDto;
 
     const fazenda = await this.prisma.fazenda.create({
@@ -23,6 +24,9 @@ export class FazendasService {
     });
 
     return fazenda;
+  } catch(error) {
+    throw new BadRequestException('Erro ao criar fazenda.')
+  }
   }
 
   async findOne(id: number) {
