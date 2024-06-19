@@ -6,7 +6,6 @@ import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service';
 import { FindByEmailDto } from '../usuarios/dto/find-by-email.dto';
 import { LoginDto } from './dto/login.dto';
-import { ConfigService } from '@nestjs/config';
 import { UsuariosService } from '../usuarios/usuarios.service';
 import { FindByIdDto } from '../usuarios/dto/find-by-id.dto';
 
@@ -15,7 +14,6 @@ export class AuthService {
     constructor(private readonly usuariosService: UsuariosService, 
                 private readonly jwtService: JwtService,
                 private readonly prismaService: PrismaService,
-                private readonly configService: ConfigService
                 ){}
 
     async login(loginDto: LoginDto): Promise <{ access_token: string }>
@@ -38,6 +36,7 @@ export class AuthService {
       if (await bcrypt.compare(password, usuario.senha)) {
             const payload: Payload = {
                 sub: usuario.id_usuario,
+                id_usuario: usuario.id_usuario,
                 email: usuario.email,
                 nomeCompleto: usuario.nomeCompleto,
                 documentoFiscal: usuario.documentoFiscal,
@@ -88,6 +87,7 @@ export class AuthService {
 
     const payload: Payload = {
       sub: usuario.id_usuario,
+      id_usuario: usuario.id_usuario,
       email: usuario.email,
       nomeCompleto: usuario.nomeCompleto,
       documentoFiscal: usuario.documentoFiscal,

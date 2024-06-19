@@ -1,6 +1,5 @@
 export class Usuario {
-    id_usuario:        number
-     
+    id_usuario: number;
     nomeCompleto: string;
     documentoFiscal: string;
     email: string;
