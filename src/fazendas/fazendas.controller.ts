@@ -35,7 +35,6 @@ export class FazendasController {
   }
 
   @ApiOperation({summary: 'Rota para deletar a fazenda'})
-  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: number) {
     return this.fazendasService.remove(+id);
