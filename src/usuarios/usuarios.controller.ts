@@ -78,8 +78,6 @@ export class UsuariosController {
     return user;
   }
 
-  @UseGuards(JwtAuthGuard)
-  @UseInterceptors(UserIdInterceptor)
   @ApiOperation({
     summary: 'Rota para atualizar dados do usuário',
     description: 'Necessário cookie de autenticação'
@@ -90,8 +88,6 @@ export class UsuariosController {
     return updatedUser;
   }
 
-  @UseGuards(JwtAuthGuard)
-  @UseInterceptors(UserIdInterceptor)
   @ApiOperation({
     summary: 'Rota para deletar usuário',
     description: 'Necessário cookie de autenticação'
