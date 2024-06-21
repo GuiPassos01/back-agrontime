@@ -42,29 +42,29 @@ model EnderecoUsuario {
 }
 
 model Fazenda {
-  idFazenda        Int             @id @default(autoincrement()) @map("id_fazenda")
-  idUsuario        Int             @map("id_usuario")
-  nome             String          @db.VarChar(100)
-  nirf             String          @db.VarChar(100)
-  areaPropriedade  Float           @map("area_propriedade")
-  qtdFuncionarios  Int             @map("qtd_funcionarios")
-  EnderecoFazenda  EnderecoFazenda?
-  usuario          Usuarios        @relation(fields: [idUsuario], references: [idUsuario])
+  idFazenda       Int              @id @default(autoincrement()) @map("id_fazenda")
+  idUsuario       Int              @map("id_usuario")
+  nome            String           @db.VarChar(100)
+  nirf            String           @db.VarChar(100)
+  areaPropriedade Float            @map("area_propriedade")
+  qtdFuncionarios Int              @map("qtd_funcionarios")
+  EnderecoFazenda EnderecoFazenda?
+  usuario         Usuarios         @relation(fields: [idUsuario], references: [idUsuario], onDelete: Cascade)
 
   @@map("fazenda")
 }
 
 model EnderecoFazenda {
-  idEndereco  Int      @id @default(autoincrement()) @map("id_endereco")
-  idFazenda   Int      @unique @map("id_fazenda")
-  cep         String   @db.VarChar(20)
-  rua         String   @db.VarChar(100)
-  numero      String   @db.VarChar(20)
-  complemento String?  @db.VarChar(100)
-  bairro      String   @db.VarChar(100)
-  cidade      String   @db.VarChar(100)
-  estado      String   @db.VarChar(100)
-  fazenda     Fazenda  @relation(fields: [idFazenda], references: [idFazenda], onDelete: Cascade)
+  idEndereco  Int     @id @default(autoincrement()) @map("id_endereco")
+  idFazenda   Int     @unique @map("id_fazenda")
+  cep         String  @db.VarChar(20)
+  rua         String  @db.VarChar(100)
+  numero      String  @db.VarChar(20)
+  complemento String? @db.VarChar(100)
+  bairro      String  @db.VarChar(100)
+  cidade      String  @db.VarChar(100)
+  estado      String  @db.VarChar(100)
+  fazenda     Fazenda @relation(fields: [idFazenda], references: [idFazenda], onDelete: Cascade)
 
   @@map("endereco_fazenda")
 }
