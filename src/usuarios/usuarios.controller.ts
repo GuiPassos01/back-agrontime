@@ -88,6 +88,7 @@ export class UsuariosController {
     return updatedUser;
   }
 
+  @UseInterceptors(UserIdInterceptor)
   @ApiOperation({
     summary: 'Rota para deletar usuário',
     description: 'Necessário cookie de autenticação'
